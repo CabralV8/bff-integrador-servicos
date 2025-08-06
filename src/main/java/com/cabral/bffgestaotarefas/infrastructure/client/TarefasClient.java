@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@FeignClient(name = "gestor-tarefas", url = "${gestor-tarefas.url}")
+@FeignClient(name = "gestor.tarefas", url = "${gestor.tarefas.url}")
 public interface TarefasClient {
 
     @PostMapping
@@ -19,7 +19,7 @@ public interface TarefasClient {
                                      @RequestHeader("Authorization") String token);
 
 
-    @GetMapping("/events")
+    @GetMapping("/eventos")
     List<TarefasDTOResponse> buscaListaDeTarefasPorPeriodo(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
