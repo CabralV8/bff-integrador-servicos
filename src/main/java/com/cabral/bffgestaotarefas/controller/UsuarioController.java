@@ -9,6 +9,7 @@ import com.cabral.bffgestaotarefas.business.dto.in.UsuarioDTORequest;
 import com.cabral.bffgestaotarefas.business.dto.out.EnderecoDTOResponse;
 import com.cabral.bffgestaotarefas.business.dto.out.TelefoneDTOResponse;
 import com.cabral.bffgestaotarefas.business.dto.out.UsuarioDTOResponse;
+import com.cabral.bffgestaotarefas.business.dto.out.ViaCepRecord;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -123,4 +124,15 @@ public class UsuarioController {
                                                                 @RequestHeader(name = "Authorization", required = false) String token){
         return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
     }
+
+    @GetMapping("/endereco/{cep}")
+    @Operation(summary = "Buscar endereço pelo cep",
+            description = "Realiza a busca do endereço pelo cep.")
+    @ApiResponse(responseCode = "200", description = "Dados de endereço retornados com sucesso.")
+    @ApiResponse(responseCode = "400", description = "Cep inválido.")
+    @ApiResponse(responseCode = "500", description = "Erro interno de servidor.")
+    public ResponseEntity<ViaCepRecord> buscarEndereco(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(usuarioService.buscaEnderecoPorCep(cep ));
+    }
+
 }

@@ -7,6 +7,7 @@ import com.cabral.bffgestaotarefas.business.dto.in.UsuarioDTORequest;
 import com.cabral.bffgestaotarefas.business.dto.out.EnderecoDTOResponse;
 import com.cabral.bffgestaotarefas.business.dto.out.TelefoneDTOResponse;
 import com.cabral.bffgestaotarefas.business.dto.out.UsuarioDTOResponse;
+import com.cabral.bffgestaotarefas.business.dto.out.ViaCepRecord;
 import com.cabral.bffgestaotarefas.infrastructure.client.UsuarioClient;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,9 @@ public class UsuarioService {
 
     public TelefoneDTOResponse cadastraTelefone(String token, TelefoneDTORequest dto){
         return usuarioClient.cadastraTelefone(dto, token);
+    }
+
+    public ViaCepRecord buscaEnderecoPorCep(String cep){
+        return usuarioClient.buscarDadosCep(cep);
     }
 }
