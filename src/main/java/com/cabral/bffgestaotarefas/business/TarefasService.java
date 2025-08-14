@@ -1,8 +1,8 @@
 package com.cabral.bffgestaotarefas.business;
 
 
-import com.cabral.bffgestaotarefas.business.dto.in.TarefasDTORequest;
-import com.cabral.bffgestaotarefas.business.dto.out.TarefasDTOResponse;
+import com.cabral.bffgestaotarefas.business.dto.in.TarefasRecordRequest;
+import com.cabral.bffgestaotarefas.business.dto.out.TarefasRecordResponse;
 import com.cabral.bffgestaotarefas.infrastructure.client.TarefasClient;
 import com.cabral.bffgestaotarefas.infrastructure.enums.StatusNotificacaoEnum;
 import org.springframework.stereotype.Service;
@@ -20,17 +20,17 @@ public class TarefasService {
     }
 
 
-    public TarefasDTOResponse gravarTarefa(String token, TarefasDTORequest dto) {
+    public TarefasRecordResponse gravarTarefa(String token, TarefasRecordRequest dto) {
         return tarefasClient.gravarTarefas(dto, token);
     }
 
-    public List<TarefasDTOResponse> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataInicial,
-                                                                    LocalDateTime dataFinal,
-                                                                    String token) {
+    public List<TarefasRecordResponse> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataInicial,
+                                                                       LocalDateTime dataFinal,
+                                                                       String token) {
         return tarefasClient.buscaListaDeTarefasPorPeriodo(dataInicial, dataFinal, token);
     }
 
-    public List<TarefasDTOResponse> buscaTarefasPorEmail(String token) {
+    public List<TarefasRecordResponse> buscaTarefasPorEmail(String token) {
         return tarefasClient.buscarTarefasPorEmail(token);
     }
 
@@ -38,11 +38,11 @@ public class TarefasService {
         tarefasClient.deletarTarefaPorId(id, token);
     }
 
-    public TarefasDTOResponse alteraStatus(StatusNotificacaoEnum status, String id, String token) {
+    public TarefasRecordResponse alteraStatus(StatusNotificacaoEnum status, String id, String token) {
         return tarefasClient.alterarStaturNotificacao(status, id, token);
     }
 
-    public TarefasDTOResponse atualizarTarefas(TarefasDTOResponse dto, String id, String token) {
+    public TarefasRecordResponse atualizarTarefas(TarefasRecordResponse dto, String id, String token) {
         return tarefasClient.atualizarTarefas(dto, id, token);
     }
 }

@@ -1,8 +1,7 @@
 package com.cabral.bffgestaotarefas.business;
 
-import com.cabral.bffgestaotarefas.business.dto.in.LoginRequestDTO;
-import com.cabral.bffgestaotarefas.business.dto.in.TarefasDTORequest;
-import com.cabral.bffgestaotarefas.business.dto.out.TarefasDTOResponse;
+import com.cabral.bffgestaotarefas.business.dto.in.LoginRecordRequest;
+import com.cabral.bffgestaotarefas.business.dto.out.TarefasRecordResponse;
 import com.cabral.bffgestaotarefas.infrastructure.enums.StatusNotificacaoEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,26 +32,24 @@ public class CronService {
 
     @Scheduled(cron = "${cron.horario}")
     public void buscaTarefasProximaHora() {
-        String token = login(converterParaRequestDTO());
+        String token = login(converterParaRequestRecord());
         LocalDateTime horaFutura = LocalDateTime.now().plusHours(1);
         LocalDateTime horaFuturaMaisCincoMinutos = LocalDateTime.now().plusHours(1).plusMinutes(5);
 
-        List<TarefasDTOResponse> listaTarefas = tarefasService.buscaTarefasAgendadasPorPeriodo(horaFutura, horaFuturaMaisCincoMinutos, token);
+        List<TarefasRecordResponse> listaTarefas = tarefasService.buscaTarefasAgendadasPorPeriodo(horaFutura, horaFuturaMaisCincoMinutos, token);
 
         listaTarefas.forEach(tarefa -> {emailService.enviarEmail(tarefa);
-            tarefasService.alteraStatus(StatusNotificacaoEnum.NOTIFICADO, tarefa.getId(),
+            tarefasService.alteraStatus(StatusNotificacaoEnum.NOTIFICADO, tarefa.id(),
                     token);});
 
         }
 
-    public String login(LoginRequestDTO dto) {
-        return usuarioService.loginUsuario(dto);
+    public String login(LoginRecordRequest record) {
+        // Aqui, o UsuarioService deve aceitar LoginRecordRequest
+        return usuarioService.loginUsuario(record);
     }
 
-    public LoginRequestDTO converterParaRequestDTO() {
-        LoginRequestDTO dto = new LoginRequestDTO();
-        dto.setEmail(this.email);
-        dto.setSenha(this.senha);
-        return dto;
+    public LoginRecordRequest converterParaRequestRecord() {
+        return new LoginRecordRequest(this.email, this.senha);
     }
 }
