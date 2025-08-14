@@ -1,6 +1,6 @@
 package com.cabral.bffgestaotarefas.business;
 
-import com.cabral.bffgestaotarefas.business.dto.out.TarefasDTOResponse;
+import com.cabral.bffgestaotarefas.business.dto.out.TarefasRecordResponse;
 import com.cabral.bffgestaotarefas.infrastructure.client.EmailClient;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class EmailService {
         this.emailClient = emailClient;
     }
 
-    public void enviarEmail(TarefasDTOResponse dto) {
+    public void enviarEmail(TarefasRecordResponse dto) {
         emailClient.enviarEmail(dto);
     }
 }
